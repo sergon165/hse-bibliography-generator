@@ -10,6 +10,7 @@ from formatters.models import (
     InternetResourceModel,
     ArticlesCollectionModel,
     DissertationModel,
+    JournalModel,
 )
 from formatters.styles.base import BaseCitationStyle
 from logger import get_logger
@@ -137,6 +138,35 @@ class GOSTDissertation(BaseCitationStyle):
         )
 
 
+class GOSTJournal(BaseCitationStyle):
+    """
+    Форматирование для статьи из журнала.
+    """
+
+    data: JournalModel
+
+    @property
+    def template(self) -> Template:
+        return Template(
+            "$authors $article_title // $journal_name. $year. №$number. С. $pages."
+        )
+
+    def substitute(self) -> str:
+
+        logger.info(
+            'Форматирование статьи из журнала "%s" ...', self.data.article_title
+        )
+
+        return self.template.substitute(
+            authors=self.data.authors,
+            article_title=self.data.article_title,
+            journal_name=self.data.journal_name,
+            year=self.data.year,
+            number=self.data.number,
+            pages=self.data.pages,
+        )
+
+
 class GOSTCitationFormatter:
     """
     Базовый класс для итогового форматирования списка источников.
@@ -147,6 +177,7 @@ class GOSTCitationFormatter:
         InternetResourceModel.__name__: GOSTInternetResource,
         ArticlesCollectionModel.__name__: GOSTCollectionArticle,
         DissertationModel.__name__: GOSTDissertation,
+        JournalModel.__name__: GOSTJournal,
     }
 
     def __init__(self, models: list[BaseModel]) -> None:

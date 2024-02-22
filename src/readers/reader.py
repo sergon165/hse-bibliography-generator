@@ -12,6 +12,7 @@ from formatters.models import (
     InternetResourceModel,
     ArticlesCollectionModel,
     DissertationModel,
+    JournalModel,
 )
 from logger import get_logger
 from readers.base import BaseReader
@@ -122,6 +123,31 @@ class DissertationReader(BaseReader):
         }
 
 
+class JournalReader(BaseReader):
+    """
+    Чтение модели статьи из журнала.
+    """
+
+    @property
+    def model(self) -> Type[JournalModel]:
+        return JournalModel
+
+    @property
+    def sheet(self) -> str:
+        return "Статья из журнала"
+
+    @property
+    def attributes(self) -> dict:
+        return {
+            "authors": {0: str},
+            "article_title": {1: str},
+            "journal_name": {2: str},
+            "year": {3: int},
+            "number": {4: int},
+            "pages": {5: str},
+        }
+
+
 class SourcesReader:
     """
     Чтение из источника данных.
@@ -133,6 +159,7 @@ class SourcesReader:
         InternetResourceReader,
         ArticlesCollectionReader,
         DissertationReader,
+        JournalReader,
     ]
 
     def __init__(self, path: str) -> None:

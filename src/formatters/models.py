@@ -107,3 +107,28 @@ class DissertationModel(BaseModel):
     city: str
     year: int = Field(..., gt=0)
     pages: int = Field(..., gt=0)
+
+
+class JournalModel(BaseModel):
+
+    """
+    Модель статьи из журнала:
+
+    .. code-block::
+
+        JournalModel(
+            authors="Иванов И.М., Петров С.Н."
+            article_title="Наука как искусство"
+            journal_name="Образование и наука"
+            year=2020
+            number=10
+            pages="25-30"
+        )
+    """
+
+    authors: str
+    article_title: str
+    journal_name: str
+    year: int = Field(..., gt=0)
+    number: int = Field(..., gt=0)
+    pages: str
