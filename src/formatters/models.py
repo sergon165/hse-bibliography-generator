@@ -78,3 +78,32 @@ class ArticlesCollectionModel(BaseModel):
     publishing_house: str
     year: int = Field(..., gt=0)
     pages: str
+
+
+class DissertationModel(BaseModel):
+
+    """
+    Модель диссертации:
+
+    .. code-block::
+
+        DissertationModel(
+            author="Иванов И.М.",
+            title="Наука как искусство",
+            degree="д-р. / канд.",
+            branch="экон.",
+            speciality="01.01.01",
+            city="СПб.",
+            year=2020,
+            pages=199,
+        )
+    """
+
+    author: str
+    title: str
+    degree: str
+    branch: str
+    speciality: str
+    city: str
+    year: int = Field(..., gt=0)
+    pages: int = Field(..., gt=0)
