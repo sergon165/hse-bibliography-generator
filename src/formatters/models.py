@@ -117,12 +117,12 @@ class JournalModel(BaseModel):
     .. code-block::
 
         JournalModel(
-            authors="Иванов И.М., Петров С.Н."
-            article_title="Наука как искусство"
-            journal_name="Образование и наука"
-            year=2020
-            number=10
-            pages="25-30"
+            authors="Иванов И.М., Петров С.Н.",
+            article_title="Наука как искусство",
+            journal_name="Образование и наука",
+            year=2020,
+            number=10,
+            pages="25-30",
         )
     """
 
