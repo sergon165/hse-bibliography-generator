@@ -7,7 +7,13 @@ from typing import Type
 import openpyxl
 from openpyxl.workbook import Workbook
 
-from formatters.models import BookModel, InternetResourceModel, ArticlesCollectionModel
+from formatters.models import (
+    BookModel,
+    InternetResourceModel,
+    ArticlesCollectionModel,
+    DissertationModel,
+    JournalModel,
+)
 from logger import get_logger
 from readers.base import BaseReader
 
@@ -90,6 +96,58 @@ class ArticlesCollectionReader(BaseReader):
         }
 
 
+class DissertationReader(BaseReader):
+    """
+    Чтение модели диссертации.
+    """
+
+    @property
+    def model(self) -> Type[DissertationModel]:
+        return DissertationModel
+
+    @property
+    def sheet(self) -> str:
+        return "Диссертация"
+
+    @property
+    def attributes(self) -> dict:
+        return {
+            "author": {0: str},
+            "title": {1: str},
+            "degree": {2: str},
+            "branch": {3: str},
+            "speciality": {4: str},
+            "city": {5: str},
+            "year": {6: int},
+            "pages": {7: int},
+        }
+
+
+class JournalReader(BaseReader):
+    """
+    Чтение модели статьи из журнала.
+    """
+
+    @property
+    def model(self) -> Type[JournalModel]:
+        return JournalModel
+
+    @property
+    def sheet(self) -> str:
+        return "Статья из журнала"
+
+    @property
+    def attributes(self) -> dict:
+        return {
+            "authors": {0: str},
+            "article_title": {1: str},
+            "journal_name": {2: str},
+            "year": {3: int},
+            "number": {4: int},
+            "pages": {5: str},
+        }
+
+
 class SourcesReader:
     """
     Чтение из источника данных.
@@ -100,6 +158,8 @@ class SourcesReader:
         BookReader,
         InternetResourceReader,
         ArticlesCollectionReader,
+        DissertationReader,
+        JournalReader,
     ]
 
     def __init__(self, path: str) -> None:
